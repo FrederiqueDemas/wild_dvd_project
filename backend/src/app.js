@@ -2,9 +2,13 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
-const router = require("./router");
+const cookieParser = require("cookie-parser");
+
+const router = express.Router();
 
 const app = express();
+
+app.use(cookieParser());
 
 // use some application-level middlewares
 app.use(
@@ -21,6 +25,10 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 // Serve REACT APP
 app.use(express.static(path.join(__dirname, "..", "..", "frontend", "dist")));
+
+const userRouter = require("./routes/userRouter");
+
+router.use("/user", userRouter);
 
 // API routes
 app.use(router);

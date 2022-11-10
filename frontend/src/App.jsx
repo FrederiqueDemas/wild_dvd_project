@@ -1,4 +1,5 @@
 import Home from "./pages/Home";
+import MoviesList from "./pages/MoviesList";
 
 import "./App.css";
 
@@ -6,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <Home />
-      <p>coucou</p>
+      <MoviesList />
     </div>
   );
 }
