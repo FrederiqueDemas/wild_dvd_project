@@ -43,6 +43,24 @@ class UserManager extends AbstractManager {
     );
   }
 
+  /* {
+    "lastname": "aubert",
+    "firstname":"anthony",
+    "email": "lkbhiug@gmail.com",
+    "phone": "0696562382",
+    "password_hash": "test2",
+    "address": "5 rue du miracle",
+    "city": "tours",
+    "zipcode": "37000"
+}
+*/
+
+  findByUserEmail(email) {
+    return this.connection
+      .query(`select * from  ${this.table} where email = ?`, [email])
+      .then((result) => result[0]);
+  }
+
   update(user, id) {
     return this.connection.query(
       `update ${UserManager.table} set ? where id = ?`,

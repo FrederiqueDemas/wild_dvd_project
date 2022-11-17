@@ -1,5 +1,5 @@
 const models = require("../models");
-const { verifyPassword } = require("../helpers/argonHelper");
+const { verifyPassword, hashPassword } = require("../helpers/argonHelper");
 const { encodeJwt } = require("../helpers/jwtHelper");
 
 exports.login = (req, res) => {
@@ -35,4 +35,26 @@ exports.login = (req, res) => {
 
 exports.logout = (req, res) => {
   res.clearCookie("token").sendStatus(200);
+};
+
+exports.addNewUser = async (req, res) => {
+  try {
+    const { user } = req.body;
+    const validationErrorsUser = models.user.validate(user);
+    if (validationErrorsUser) res.status(422).json({ validationErrorsUser });
+    else {
+      const hash = await hashPassword(user.password);
+      delete user.password;
+
+      const [newUser] = await models.user.insert({
+        ...user,
+        password_hash: hash,
+      });
+
+      res.status(201).send({ ...user, id: newUser.insertId });
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };

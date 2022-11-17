@@ -1,4 +1,5 @@
 const models = require("../models");
+const { hashPassword } = require("../helpers/argonHelper");
 
 const browse = (req, res) => {
   models.user
@@ -29,17 +30,13 @@ const read = (req, res) => {
 };
 
 const modify = (req, res) => {
-  const user = req.body;
-  user.id = parseInt(req.params.id, 10);
+  const newUser = req.body;
 
   models.user
-    .update(user)
+    .update(newUser, req.params.id)
     .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
+      if (result.affectedRows === 0) throw new Error("no change affected");
+      res.status(201).send({ ...newUser });
     })
     .catch((err) => {
       console.error(err);
@@ -48,17 +45,21 @@ const modify = (req, res) => {
 };
 
 const add = (req, res) => {
-  const user = req.body;
+  const newUser = req.body;
 
-  models.user
-    .insert(user)
-    .then(([result]) => {
-      res.location(`/users/${result.insertId}`).sendStatus(201);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+  hashPassword(newUser.password).then((hash) => {
+    delete newUser.password;
+
+    models.user
+      .insert({ ...newUser, password_hash: hash })
+      .then(([result]) => {
+        res.status(201).send({ ...newUser, id: result.insertId });
+      })
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
+      });
+  });
 };
 
 const destroy = (req, res) => {
