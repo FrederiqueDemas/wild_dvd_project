@@ -30,13 +30,15 @@ const read = (req, res) => {
 };
 
 const modify = (req, res) => {
-  const newUser = req.body;
+  const modifiedUser = req.body;
+
+  modifiedUser.id = parseInt(req.params.id, 10);
 
   models.user
-    .update(newUser, req.params.id)
+    .update(modifiedUser)
     .then(([result]) => {
       if (result.affectedRows === 0) throw new Error("no change affected");
-      res.status(201).send({ ...newUser });
+      res.status(201).send({ ...modifiedUser });
     })
     .catch((err) => {
       console.error(err);

@@ -61,11 +61,11 @@ class UserManager extends AbstractManager {
       .then((result) => result[0]);
   }
 
-  update(user, id) {
-    return this.connection.query(
-      `update ${UserManager.table} set ? where id = ?`,
-      [user, id]
-    );
+  update(user) {
+    return this.connection.query(`update ${this.table} set ? where id = ?`, [
+      user,
+      user.id,
+    ]);
   }
 }
 
