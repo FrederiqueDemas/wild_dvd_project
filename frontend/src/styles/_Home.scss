@@ -1,0 +1,120 @@
+.home {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background-image: url(../src/assets/images/bg_home.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding-top: 200px;
+
+    .title {
+        h1,
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-size: 24px;
+        }
+    }
+
+    .creator-box {
+        background-color: #0000009d;
+        padding: 10px;
+        max-width: fit-content;
+        border-radius: 7px;
+
+        .creator {
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+            .name {
+                color: #5BC4BA;
+                font-weight: 600;
+                font-size: 13px;
+                margin: 3px auto;
+            }
+
+            a {
+                color: #F6F6F6;
+                font-weight: 400;
+                font-size: 12px;
+            }
+        }
+  
+    }
+
+    .button-box {
+        position: absolute;
+        bottom: 0;
+        left: calc(50% - 175px);
+        background-color: white;
+        padding: 20px 15px 35px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 350px;
+
+        .buttons-login {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 47%;
+            padding: 12px 20px;
+            text-decoration: none;
+            border: 2px solid black;
+            border-radius: 5px;
+            transition: .3s;
+        }
+
+        a:nth-child(1) {
+            color: black;
+            background-color: #fff;
+
+            &:hover {
+                color: #fff;
+                background-color: black;
+                transition: .3s;
+            }
+        }
+
+        a:nth-child(2) {
+            color: #fff;
+            background-color: black;
+
+            
+            &:hover {
+                color: black;
+                background-color: #fff;
+                transition: .3s;
+            }
+
+        }
+
+        hr {
+            width: 50%;
+            height: 3px;
+            background-color: black;
+            border-radius: 20px;
+        }
+    }
+
+}
