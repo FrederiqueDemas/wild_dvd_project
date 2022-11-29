@@ -1,5 +1,4 @@
 const express = require("express");
-const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -39,20 +38,11 @@ router.use("/auth", authRouter);
 app.use("/api", router);
 
 // Redirect all requests to the REACT app
-const reactIndexFile = path.join(
-  __dirname,
-  "..",
-  "..",
-  "frontend",
-  "dist",
-  "index.html"
-);
-
-if (fs.existsSync(reactIndexFile)) {
-  app.get("*", (req, res) => {
-    res.sendFile(reactIndexFile);
-  });
-}
+app.get("/*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "..", "frontend", "dist", "index.html")
+  );
+});
 
 // ready to export
 module.exports = app;

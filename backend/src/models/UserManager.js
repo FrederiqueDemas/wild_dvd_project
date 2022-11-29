@@ -3,7 +3,9 @@ const AbstractManager = require("./AbstractManager");
 
 class UserManager extends AbstractManager {
   constructor() {
-    super({ table: "user" });
+    super({
+      table: "user",
+    });
   }
 
   validate(data, forCreation = true) {
@@ -24,7 +26,9 @@ class UserManager extends AbstractManager {
     else
       joiObject.password_hash = Joi.string().max(255).presence(this.presence);
     /* abortEarly: false ??? */
-    return Joi.object(joiObject).validate(data, { abortEarly: false }).error;
+    return Joi.object(joiObject).validate(data, {
+      abortEarly: false,
+    }).error;
   }
 
   insert(user) {
@@ -42,18 +46,6 @@ class UserManager extends AbstractManager {
       ]
     );
   }
-
-  /* {
-    "lastname": "aubert",
-    "firstname":"anthony",
-    "email": "lkbhiug@gmail.com",
-    "phone": "0696562382",
-    "password_hash": "test2",
-    "address": "5 rue du miracle",
-    "city": "tours",
-    "zipcode": "37000"
-}
-*/
 
   findByUserEmail(email) {
     return this.connection
